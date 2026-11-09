@@ -4,16 +4,10 @@ import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
 public record ReviewAnalysisView(
-    String fileName,
-    SentimentScores sentiment
+    String label,
+    double compound,
+    double positive,
+    double neutral,
+    double negative
 ) {
-    @Serdeable
-    public record SentimentScores(
-        double positive,
-        double neutral,
-        double negative,
-        double compound,
-        String label
-    ) {
-    }
 }

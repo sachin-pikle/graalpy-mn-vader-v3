@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>graalpy.demo</groupId>
-  <artifactId>graalpy-mn-vader-v2</artifactId>
+  <artifactId>graalpy-mn-vader-v3</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 
@@ -18,7 +18,7 @@
     <jdk.version>25</jdk.version>
     <release.version>25</release.version>
     <micronaut.version>5.2.4</micronaut.version>
-    <graalpy.version>25.0.3</graalpy.version>
+    <graalpy.version>25.4.4.1.1</graalpy.version>
     <graal.version>${graalpy.version}</graal.version>
     <micronaut.runtime>netty</micronaut.runtime>
     <exec.mainClass>graalpy.demo.Application</exec.mainClass>
@@ -32,6 +32,17 @@
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>org.graalvm.python</groupId>
+      <artifactId>python</artifactId>
+      <version>${graalpy.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.python</groupId>
+      <artifactId>python-embedding</artifactId>
+      <version>${graalpy.version}</version>
+    </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server-netty</artifactId>
@@ -165,7 +176,7 @@
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=graalpy.demo</arg>
-            <arg>-Amicronaut.processing.module=graalpy-mn-vader-v2</arg>
+            <arg>-Amicronaut.processing.module=graalpy-mn-vader-v3</arg>
           </compilerArgs>
         </configuration>
       </plugin>

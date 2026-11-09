@@ -10,11 +10,10 @@
 <main class="shell">
     <section class="hero card">
         <p class="eyebrow">Graal</p>
-        <span class="version-tag">version: v2</span>
+        <span class="version-tag">version: v3</span>
         <h1>Sentiment Analysis with VADER and GraalPy</h1>
         <p class="lede">
-            Upload a product review file, send it from Java into GraalPy, run VADER sentiment analysis,
-            and show the result immediately.
+            Upload a product review and run VADER sentiment analysis with GraalPy embedded in Java.
         </p>
     </section>
 
@@ -24,7 +23,7 @@
             <h2>Analyze a review file</h2>
             <form id="upload-form" class="upload-form">
                 <label class="upload-box">
-                    <input id="file-input" name="file" type="file" accept=".txt,.md,.html,.htm" required>
+                    <input id="file-input" type="file" accept=".txt,.md,.html,.htm" required>
                     <span>Select a text-based product review file</span>
                 </label>
                 <div class="form-actions">
@@ -32,13 +31,12 @@
                     <button id="clear-button" type="button" class="button-secondary">Clear</button>
                 </div>
             </form>
-            <p class="note">Tip: plain text and markdown are the easiest first demo inputs.</p>
         </article>
 
         <article class="card">
             <p class="eyebrow">Preview</p>
             <h2>Review Text</h2>
-            <pre id="review-text" class="code-block">Upload a file to see its decoded review text here.</pre>
+            <pre id="review-text" class="code-block">Upload a file to preview its text here.</pre>
         </article>
     </section>
 

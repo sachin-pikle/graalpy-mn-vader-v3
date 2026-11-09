@@ -20,10 +20,9 @@ public final class GraalPySentimentService {
         this.sentimentModule = sentimentModule;
     }
 
-    public ReviewAnalysisView analyze(String fileName, byte[] fileBytes) {
-        String reviewText = new String(fileBytes, StandardCharsets.UTF_8).trim();
-        LOG.info("Running GraalPy VADER analysis for {}", fileName);
-        String payload = sentimentModule.analyze_review_json(fileName, reviewText);
+    public ReviewAnalysisView analyze(String reviewText) {
+        LOG.info("Running GraalPy VADER analysis");
+        String payload = sentimentModule.analyze_review_json(reviewText.trim());
         try {
             return jsonMapper.readValue(payload.getBytes(StandardCharsets.UTF_8), ReviewAnalysisView.class);
         } catch (IOException e) {

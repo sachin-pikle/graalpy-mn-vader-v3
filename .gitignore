@@ -35,5 +35,3 @@ __pycache__/
 # ./mvnw will download it on first use.
 .mvn/wrapper/maven-wrapper.jar
 
-# Unlike the stock Java template, do not ignore *.jar or *.zip:
-# this repo intentionally keeps demo artifacts under _success/.

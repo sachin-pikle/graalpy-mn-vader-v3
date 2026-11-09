@@ -34,7 +34,7 @@ const sentimentJson = document.getElementById("sentiment-json");
 const sentimentCard = document.getElementById("sentiment-card");
 
 function resetResults() {
-  reviewText.textContent = "Upload a file to see its decoded review text here.";
+  reviewText.textContent = "Upload a file to preview its text here.";
   sentimentJson.textContent = "The VADER output will appear here.";
   sentimentCard.className = "sentiment-card neutral";
   sentimentCard.innerHTML = `
@@ -46,11 +46,11 @@ function resetResults() {
 function renderSentiment(result) {
   sentimentJson.textContent = JSON.stringify(result, null, 2);
 
-  const label = result.sentiment.label.toLowerCase();
+  const label = result.label.toLowerCase();
   sentimentCard.className = `sentiment-card ${label}`;
   sentimentCard.innerHTML = `
-    <span class="label"><span class="emoji">${sentimentEmoji(label)}</span> ${escapeHtml(result.sentiment.label)}</span>
-    <strong>Compound score: ${result.sentiment.compound}</strong>
+    <span class="label"><span class="emoji">${sentimentEmoji(label)}</span> ${escapeHtml(result.label)}</span>
+    <strong>Compound score: ${result.compound}</strong>
   `;
 }
 
@@ -77,13 +77,12 @@ uploadForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("file", fileInput.files[0]);
-
   try {
+    const text = await fileInput.files[0].text();
     const result = await fetchJson("/api/reviews/analyze", {
       method: "POST",
-      body: formData,
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({text}),
     });
     renderSentiment(result);
   } catch (error) {

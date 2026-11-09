@@ -3,16 +3,15 @@ package graalpy.demo;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
-import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 
-import java.io.IOException;
 import java.util.Map;
 
-@Controller("/api")
+@Controller("/api/reviews")
 final class ReviewController {
     private final GraalPySentimentService graalPySentimentService;
 
@@ -20,18 +19,14 @@ final class ReviewController {
         this.graalPySentimentService = graalPySentimentService;
     }
 
-    @Post(uri = "/reviews/analyze", consumes = MediaType.MULTIPART_FORM_DATA)
+    @Post(uri = "/analyze", consumes = MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ExecuteOn(TaskExecutors.BLOCKING)
-    HttpResponse<?> analyze(CompletedFileUpload file) throws IOException {
-        if (file == null || file.getFilename() == null || file.getFilename().isBlank()) {
-            return HttpResponse.badRequest(Map.of("message", "Choose a review file before uploading."));
+    HttpResponse<?> analyze(@Body ReviewRequest request) {
+        if (request == null || request.text() == null || request.text().isBlank()) {
+            return HttpResponse.badRequest(Map.of("message", "Review text must not be blank."));
         }
 
-        if (file.getSize() == 0) {
-            return HttpResponse.badRequest(Map.of("message", "The uploaded file is empty."));
-        }
-
-        return HttpResponse.ok(graalPySentimentService.analyze(file.getFilename(), file.getBytes()));
+        return HttpResponse.ok(graalPySentimentService.analyze(request.text()));
     }
 }
