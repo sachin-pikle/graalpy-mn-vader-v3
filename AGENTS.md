@@ -5,7 +5,7 @@ Keep this repository focused on one example: a Micronaut Java application callin
 # Current Sample
 
 - Artifact and application name: `graalpy-mn-vader-v3`
-- Micronaut: 5.2.4
+- Micronaut Platform: 5.2.4
 - Java: 25
 - GraalPy Maven plugin and runtime: 25.4.4.1.1
 - Python package: `vaderSentiment==3.3.2`

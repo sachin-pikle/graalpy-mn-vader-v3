@@ -1,8 +1,16 @@
-# GraalPy VADER v3
+# Demo: VADER Sentiment Analysis with GraalPy and Micronaut
 
-A Micronaut application that calls VADER through an injected GraalPy module.
+<small>version: v3</small>
 
-Uses GraalPy 25.4.4.1.1 and VADER 3.3.2.
+This sample is a Micronaut Java service that calls a Python VADER function through an injected `@GraalPyModule` interface. The browser UI sends review text as JSON and displays the sentiment result.
+
+## Versions
+
+- Micronaut Platform 5.2.4
+- Java 25
+- GraalVM SDKMAN version `25.4.4+1-graal`
+- GraalPy Maven plugin and runtime 25.4.4.1.1
+- Python package `vaderSentiment==3.3.2`
 
 ## Flow
 
@@ -14,7 +22,7 @@ Browser
   → Python VADER function
 ```
 
-The browser reads the selected review file and sends its text as JSON:
+The browser reads the selected review file and sends its text as JSON. Here’s an example:
 
 ```json
 {"text":"This coffee grinder is fantastic."}
@@ -23,22 +31,59 @@ The browser reads the selected review file and sends its text as JSON:
 The endpoint returns the VADER result directly:
 
 ```json
-{"label":"positive","compound":0.5984,"positive":0.565,"neutral":0.435,"negative":0.0}
+{
+  "label": "positive",
+  "compound": 0.5574,
+  "positive": 0.474,
+  "neutral": 0.526,
+  "negative": 0.0
+}
 ```
 
-## Run
+## Key Files
+
+- `pom.xml` — Micronaut, GraalPy and VADER versions and build configuration
+- `src/main/java/graalpy/demo/ReviewController.java` — HTTP endpoint and blank-text check
+- `src/main/java/graalpy/demo/GraalPySentimentService.java` — calls Python and maps its JSON result
+- `src/main/java/graalpy/demo/SentimentModule.java` — injected `@GraalPyModule` interface
+- `src/main/java/graalpy/demo/ReviewAnalysisView.java` — response type
+- `src/main/resources/org.graalvm.python.vfs/src/sentiment_app.py` — Python VADER function
+- `src/main/resources/public/` — browser UI
+- `samples/` — positive and negative reviews for the demo
+
+## VS Code
+
+This project disables Java extension autobuild in `.vscode/settings.json` while the generated Serde compilation issue is investigated. See [Micronaut Serialization issue #1492](https://github.com/micronaut-projects/micronaut-serialization/issues/1492).
+
+## Run Locally
+
+Select the project GraalVM with SDKMAN:
 
 ```bash
 sdk use java 25.4.4+1-graal
-./mvnw test
+```
+
+Run the tests:
+
+```bash
+./mvnw clean test
+```
+
+Start the application:
+
+```bash
 ./mvnw mn:run
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:8080](http://localhost:8080), then choose a review file from `samples/` in the browser.
 
-Sample reviews are under `samples/`.
+The first build needs network access to download Maven and GraalPy dependencies and install the pinned VADER package.
 
 ## API
+
+`POST /api/reviews/analyze` accepts review text as JSON and returns the VADER scores and label.
+
+Test the endpoint while the application is running:
 
 ```bash
 curl -X POST http://localhost:8080/api/reviews/analyze \
@@ -46,26 +91,50 @@ curl -X POST http://localhost:8080/api/reviews/analyze \
   -d '{"text":"I love this coffee grinder. It works perfectly!"}'
 ```
 
-## Package
+The response is JSON with `label`, `compound`, `positive`, `neutral`, and `negative` fields.
 
-Build and run the executable jar:
+Send blank text and include the response status:
+
+```bash
+curl -i -X POST http://localhost:8080/api/reviews/analyze \
+  -H 'Content-Type: application/json' \
+  -d '{"text":""}'
+```
+
+The response status is `400 Bad Request`.
+
+## Executable JAR
+
+Build the executable JAR:
 
 ```bash
 ./mvnw package
+```
+
+Run it:
+
+```bash
 java -jar target/graalpy-mn-vader-v3-0.1.jar
 ```
 
-The jar contains the Python module and installed VADER package under `org.graalvm.python.vfs/`.
+The JAR contains the Python module and the installed VADER package in GraalPy's virtual filesystem.
 
-Build a native executable:
+## Native Image
+
+Build the native executable:
 
 ```bash
 ./mvnw package -Dpackaging=native-image
+```
+
+Run it:
+
+```bash
 ./target/graalpy-mn-vader-v3
 ```
 
-## Changes from v2
+## Differences from v2
 
-- Accepts review text as JSON instead of a multipart file upload.
-- Returns a flat sentiment result without the filename wrapper.
-- Keeps the same browser workflow and `@GraalPyModule` integration.
+- The browser sends review text as JSON; v2 accepted a text-file upload as multipart data.
+- The endpoint returns the sentiment result directly, without a filename wrapper.
+- The browser workflow and injected `@GraalPyModule` integration are retained.
