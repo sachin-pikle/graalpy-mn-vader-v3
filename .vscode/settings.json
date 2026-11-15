@@ -1,3 +1,4 @@
+// Workaround for the generated serializer compilation issue: https://github.com/micronaut-projects/micronaut-serialization/issues/1492
 {
   "java.autobuild.enabled": false
 }
