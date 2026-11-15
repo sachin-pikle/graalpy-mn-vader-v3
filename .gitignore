@@ -10,7 +10,8 @@ out/
 .project
 .settings/
 .factorypath
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 # Editor temp files
 *.swp
