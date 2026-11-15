@@ -6,7 +6,7 @@ This sample is a Micronaut Java service that calls a Python VADER function throu
 
 ## Versions
 
-- Micronaut Platform 5.2.4
+- Micronaut Platform 5.2.6
 - Java 25
 - GraalVM SDKMAN version `25.4.4+1-graal`
 - GraalPy Maven plugin and runtime 25.4.4.1.1

@@ -10,14 +10,14 @@
   <parent>
     <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>5.2.4</version>
+    <version>5.2.6</version>
   </parent>
 
   <properties>
     <packaging>jar</packaging>
     <jdk.version>25</jdk.version>
     <release.version>25</release.version>
-    <micronaut.version>5.2.4</micronaut.version>
+    <micronaut.version>5.2.6</micronaut.version>
     <graalpy.version>25.4.4.1.1</graalpy.version>
     <graal.version>${graalpy.version}</graal.version>
     <micronaut.runtime>netty</micronaut.runtime>
