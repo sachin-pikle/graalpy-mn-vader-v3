@@ -7,7 +7,7 @@ Keep this repository focused on one example: a Micronaut Java application callin
 - Artifact and application name: `graalpy-mn-vader-v3`
 - Micronaut Platform: 5.2.6
 - Java: 25
-- GraalPy Maven plugin and runtime: 25.4.4.1.1
+- GraalPy Maven plugin and runtime: 25.5.5.0.3
 - Python package: `vaderSentiment==3.3.2`
 - Endpoint: `POST /api/reviews/analyze`
 - Request: JSON containing review text
@@ -35,7 +35,7 @@ Keep this repository focused on one example: a Micronaut Java application callin
 # Verify
 
 ```bash
-sdk use java 25.4.4+1-graal
+sdk use java 25.5.5.0+3-graal
 ./mvnw test
 ./mvnw mn:run
 ```

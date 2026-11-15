@@ -8,8 +8,8 @@ This sample is a Micronaut Java service that calls a Python VADER function throu
 
 - Micronaut Platform 5.2.6
 - Java 25
-- GraalVM SDKMAN version `25.4.4+1-graal`
-- GraalPy Maven plugin and runtime 25.4.4.1.1
+- GraalVM SDKMAN version `25.5.5.0+3-graal`
+- GraalPy Maven plugin and runtime 25.5.5.0.3
 - Python package `vaderSentiment==3.3.2`
 
 ## Flow
@@ -60,7 +60,7 @@ This project disables Java extension autobuild in `.vscode/settings.json` while 
 Select the project GraalVM with SDKMAN:
 
 ```bash
-sdk use java 25.4.4+1-graal
+sdk use java 25.5.5.0+3-graal
 ```
 
 Run the tests:
