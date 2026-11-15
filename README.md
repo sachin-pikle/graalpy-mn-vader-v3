@@ -108,7 +108,7 @@ The response status is `400 Bad Request`.
 Build the executable JAR:
 
 ```bash
-./mvnw package
+./mvnw clean package
 ```
 
 Run it:
@@ -119,12 +119,27 @@ java -jar target/graalpy-mn-vader-v3-0.1.jar
 
 The JAR contains the Python module and the installed VADER package in GraalPy's virtual filesystem.
 
+## Inspect the JAR in JD-GUI
+
+```bash
+java -jar jd-gui-1.6.6.jar
+```
+
+When JD-GUI opens, open `target/graalpy-mn-vader-v3-0.1.jar`.
+
+Look for these paths inside the JAR:
+
+- `org.graalvm.python.vfs/src/sentiment_app.py`
+- `org.graalvm.python.vfs/venv/`
+
+These show the Python module and installed VADER package in GraalPy’s virtual filesystem inside the executable JAR.
+
 ## Native Image
 
 Build the native executable:
 
 ```bash
-./mvnw package -Dpackaging=native-image
+./mvnw clean package -Dpackaging=native-image
 ```
 
 Run it:
