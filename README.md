@@ -4,6 +4,8 @@
 
 This sample is a Micronaut Java service that calls a Python VADER function through an injected `@GraalPyModule` interface. The browser UI sends review text as JSON and displays the sentiment result.
 
+> **Note:** This demo was used in the Practical Python AI on the JVM with GraalPy and Pyronaut session at WeAreDevelopers Conference India. See the [conference talk entry](https://github.com/sachin-pikle/conference-talks/tree/main#2026-wearedevelopers-conference-india) for the presentation and video details.
+
 ## Versions
 
 - Micronaut Platform 5.2.6
